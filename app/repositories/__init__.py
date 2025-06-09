@@ -1,2 +1,5 @@
-from .base_repository import CreateAbstractRepository, ReadAbstractRepository, UpdateAbstractRepository, DeleteAbstractRepository
-from .stock_repository import StockRepository
+from .receipt_repository import ReceiptRepository
+from .receipt_type_repository import ReceiptTypeRepository
+from .receipt_header_repository import ReceiptHeaderRepository
+from .receipt_footer_repository import ReceiptFooterRepository
+from .receipt_items_repository import ReceiptItemsRepository
