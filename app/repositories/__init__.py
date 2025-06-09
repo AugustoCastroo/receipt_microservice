@@ -1,0 +1,2 @@
+from .base_repository import CreateAbstractRepository, ReadAbstractRepository, UpdateAbstractRepository, DeleteAbstractRepository
+from .stock_repository import StockRepository

@@ -1,0 +1,31 @@
+services:
+    stock:
+        image: stock-microservice:v1.0.0
+        deploy:
+            replicas: 2
+        networks:
+            mired:
+                aliases:
+                    - stock.universidad.localhost
+        environment:
+          - SQLALCHEMY_TRACK_MODIFICATIONS=${SQLALCHEMY_TRACK_MODIFICATIONS}
+          - SQLALCHEMY_RECORD_QUERIES=${SQLALCHEMY_RECORD_QUERIES}
+          - TEST_DATABASE_URI=${TEST_DATABASE1_URI}
+          - DEV_DATABASE_URI=${DEV_DATABASE1_URI}
+          - PROD_DATABASE_URI=${PROD_DATABASE1_URI}
+          - FLASK_CONTEXT=${FLASK_CONTEXT}
+          - REDIS_HOST=${REDIS_HOST}
+          - REDIS_PORT=${REDIS_PORT}
+          - REDIS_DB=${REDIS_DB}
+          - REDIS_PASSWORD=${REDIS_PASSWORD}
+        labels:
+            - "traefik.enable=true"
+            - "traefik.http.routers.stock.rule=Host(`stock.universidad.localhost`)"
+            - "traefik.http.routers.stock.tls=true"
+            # Puerto por defecto del contenedor en flask
+            - "traefik.http.services.stock.loadbalancer.server.port=5000"
+            - "traefik.docker.network=mired"    
+
+networks:
+    mired:
+        external: true

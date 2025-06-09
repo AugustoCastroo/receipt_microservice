@@ -1,0 +1,8 @@
+SQLALCHEMY_TRACK_MODIFICATIONS= False
+SQLALCHEMY_RECORD_QUERIES= True
+TEST_DATABASE_URI="postgresql://usuario:Password@localhost:5432/TEST_STOCK"
+DEV_DATABASE_URI="postgresql://usuario:Password@localhost:5432/DEV_STOCK"
+PROD_DATABASE_URI="postgresql://usuario:Password@localhost:5432/PROD_STOCK"
+REDIS_HOST='localhost'
+REDIS_PORT='6379'
+REDIS_DB='0'
