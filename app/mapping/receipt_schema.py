@@ -1,7 +1,7 @@
 from marshmallow import Schema, fields, post_load
 from app.models.receipt import Receipt
 
-class ReceiptSchema(Schema):
+class ReceiptMap(Schema):
     id = fields.Integer(dump_only=True)
     id_header = fields.Integer(required=True)
     id_footer = fields.Integer(required=True)
