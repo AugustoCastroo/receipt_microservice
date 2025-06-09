@@ -1,6 +1,6 @@
 services:
     receipt:
-        image: recipt-microservice:v1.0.0
+        image: receipt-microservice:v1.0.0
         deploy:
             replicas: 1
         networks:
