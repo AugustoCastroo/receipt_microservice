@@ -1,12 +1,12 @@
 services:
-    stock:
-        image: stock-microservice:v1.0.0
+    receipt:
+        image: recipt-microservice:v1.0.0
         deploy:
-            replicas: 2
+            replicas: 1
         networks:
             mired:
                 aliases:
-                    - stock.universidad.localhost
+                    - receipt.universidad.localhost
         environment:
           - SQLALCHEMY_TRACK_MODIFICATIONS=${SQLALCHEMY_TRACK_MODIFICATIONS}
           - SQLALCHEMY_RECORD_QUERIES=${SQLALCHEMY_RECORD_QUERIES}
@@ -20,10 +20,9 @@ services:
           - REDIS_PASSWORD=${REDIS_PASSWORD}
         labels:
             - "traefik.enable=true"
-            - "traefik.http.routers.stock.rule=Host(`stock.universidad.localhost`)"
-            - "traefik.http.routers.stock.tls=true"
-            # Puerto por defecto del contenedor en flask
-            - "traefik.http.services.stock.loadbalancer.server.port=5000"
+            - "traefik.http.routers.receipt.rule=Host(`receitp.universidad.localhost`)"
+            - "traefik.http.routers.receipt.tls=true"
+            - "traefik.http.services.receipt.loadbalancer.server.port=5000"
             - "traefik.docker.network=mired"    
 
 networks:
