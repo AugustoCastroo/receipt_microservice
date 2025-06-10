@@ -1,27 +1,18 @@
-from app.models import Batch
-from app.repositories import BatchRepository
-from typing import List
-
+import os
+import requests
+from app.dto import Batch
+from app.mapping import BatchMap
 
 class BatchService():
-    
-    def save(batch: Batch) -> 'Batch':
 
-        BatchRepository.save(batch)
-        return batch
-    
-    def delete(batch: 'Batch') -> None:
-        BatchRepository.delete(batch)
-
+    @staticmethod
     def find(id: int) -> 'Batch':
-        return BatchRepository.find(id)
-    
-    def find_all() -> List['Batch']:
-        return BatchRepository.find_all()
-    
-    def find_by(**kwargs) -> List['Batch']:
-        return BatchRepository.find_by(**kwargs)
-    
-    def update(batch: 'Batch') -> 'Batch':
-        BatchRepository.update(batch)
-        return batch
+        URL_ARTICLE_SERVICE = os.getenv('URL_ARTICLE_SERVICE')
+        if not URL_ARTICLE_SERVICE:
+            raise ValueError("Environment variable 'URL_ARTICLE_SERVICE' is not set.")
+        batch_mapping = BatchMap()
+        batch_r = batch_mapping.load(requests.get(f"{URL_ARTICLE_SERVICE}/batch/{id}", verify=False))
+        if batch_r.status_code == 200:
+            return batch_mapping.load(batch_r.json())
+        else:
+            raise Exception(f"Error fetching batch with id {id}: {batch_r.status_code} - {batch_r.text}")

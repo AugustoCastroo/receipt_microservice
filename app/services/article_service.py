@@ -1,17 +1,21 @@
 from app.models import Article
 from typing import List
-import requests # app/services/article_service.py
+import requests # app/services/article.py
+from app.mapping.article_schema import ArticleMap
+import os
+
 
 
 class ArticleService():
-    
+
     @staticmethod
     def find(id: int) -> 'Article':
-        article_service = ArticleRepository.find(id)
-        if not article_service:
-                    raise ValueError(f"Article with ID {id} not found.")
-        return article_service
-    
-    @staticmethod
-    def find_by(**kwargs) -> List['Article']:
-        return ArticleRepository.find_by(**kwargs)
+        URL_ARTICLE_SERVICE = os.getenv('URL_ARTICLE_SERVICE')
+        if not URL_ARTICLE_SERVICE:
+            raise ValueError("Environment variable 'URL_ARTICLE_SERVICE' is not set.")
+        article_mapping = ArticleMap()
+        article_r = article_mapping.load(requests.get(f"{URL_ARTICLE_SERVICE}/articles/{id}", verify=False))
+        if article_r.status_code == 200:
+            return article_mapping.load(article_r.json())
+        else:
+            raise Exception(f"Error fetching article with id {id}: {article_r.status_code} - {article_r.text}")
