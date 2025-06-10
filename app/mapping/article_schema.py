@@ -1,5 +1,5 @@
 from marshmallow import Schema, fields, post_load
-from app.models import Article
+from app.dto import Article
 
 
 class ArticleMap(Schema):

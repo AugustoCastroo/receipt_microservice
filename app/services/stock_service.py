@@ -1,8 +1,6 @@
 from app.models import Stock, ReceiptItem, Article
 from app.repositories import ReceiptRepository
-from app.services import ArticleService
-from app.services import BrandService
-
+from app.services import ArticleService, BrandService
 
 class StockService():
 

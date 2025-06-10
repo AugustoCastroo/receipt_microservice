@@ -1,5 +1,5 @@
 from marshmallow import Schema, fields, validate, post_load
-from app.models import Brand
+from app.dto import Brand
 
 class BrandMap(Schema):
     id: int = fields.Integer(dump_only=True)

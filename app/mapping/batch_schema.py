@@ -1,6 +1,6 @@
 from marshmallow import Schema, fields, post_load
 from datetime import date
-from app.models import Batch
+from app.dto import Batch
 
 
 class BatchMap(Schema):

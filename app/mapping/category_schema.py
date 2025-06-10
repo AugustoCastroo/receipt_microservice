@@ -1,5 +1,5 @@
 from marshmallow import Schema, fields, post_load
-from app.models import Category
+from app.dto import Category
 
 class CategoryMap(Schema):
     id: int = fields.Integer(dump_only=True)

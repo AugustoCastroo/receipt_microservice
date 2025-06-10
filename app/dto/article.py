@@ -1,5 +1,6 @@
 from dataclasses import dataclass
 
+
 @dataclass(init=True, eq=False)
 class ArticleDTO():
     """
