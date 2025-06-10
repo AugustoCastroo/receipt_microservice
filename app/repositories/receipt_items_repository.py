@@ -4,9 +4,6 @@ from app import db
 
 
 class ReceiptItemsRepository(CreateAbstractRepository):
-    """
-    Repository class for handling database operations related to receipt items.
-    """
 
     @staticmethod
     def save(receipt_item: ReceiptItem) -> 'ReceiptItem':

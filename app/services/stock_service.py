@@ -1,18 +1,22 @@
 import os
 import requests # app/services/stock.py
 from app.dto import Stock
-from app.mapping import StockMap
+from app.mapping import StockMap, MessageMap, Message
+from tenacity import retry, wait_random, stop_after_attempt
 
 class StockService():
 
     @staticmethod
-    def find(id: int) -> 'Stock':
-        URL_ARTICLE_SERVICE = os.getenv('URL_ARTICLE_SERVICE')
+    @retry(wait=wait_random(min=1, max=3), stop=stop_after_attempt(3))
+    def register(stock: Stock) -> 'Message':
+        URL_ARTICLE_SERVICE = os.getenv('URL_STOCK_SERVICE')
         if not URL_ARTICLE_SERVICE:
-            raise ValueError("Environment variable 'URL_ARTICLE_SERVICE' is not set.")
+            raise ValueError("Environment variable 'URL_STOCK_SERVICE' is not set.")
+        message_map = MessageMap()
         stock_mapping = StockMap()
-        sotck_r = stock_mapping.load(requests.get(f"{URL_ARTICLE_SERVICE}/stock{id}", verify=False))
-        if stock_r.status_code == 200:
-            return stock_mapping.load(stock_r.json())
+        stock_json = stock_mapping.dump(stock)
+        message_r = requests.post(f"{URL_ARTICLE_SERVICE}/stocks", json=stock_json, verify=False)
+        if message_r.status_code == 200:
+            return stock_mapping.load(message_r.json())
         else:
-            raise Exception(f"Error fetching stock with id {id}: {stock_r.status_code} - {stock_r.text}")
+            raise Exception(f"Error fetching stock with id {id}: {message_r.status_code} - {message_r.text}")

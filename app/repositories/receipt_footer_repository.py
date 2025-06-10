@@ -5,9 +5,6 @@ from app import db
 
 
 class ReceiptFooterRepository(CreateAbstractRepository):
-    """
-    Repository class for handling database operations related to receipt footers.
-    """
 
     @staticmethod
     def save(receipt_footer: ReceiptFooter) -> 'ReceiptFooter':

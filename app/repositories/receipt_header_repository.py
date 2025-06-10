@@ -6,9 +6,6 @@ from app import db
 
 
 class ReceiptHeaderRepository(CreateAbstractRepository):
-    """
-    Repository class for handling database operations related to receipt headers.
-    """
 
     @staticmethod
     def save(receipt_header: ReceiptHeader) -> 'ReceiptHeader':

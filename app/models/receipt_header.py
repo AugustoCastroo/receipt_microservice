@@ -1,11 +1,12 @@
 from dataclasses import dataclass
 from datetime import datetime
-
+from app import db
 
 @dataclass(init=True, eq=True)
-class ReceiptHeader():
+class ReceiptHeader(db.Model):
 
-    id: int
-    submission_date: datetime
+    __tablename__ = 'receipt_headers'
+    id: int = db.Column('id', db.Integer, primary_key=True, autoincrement=True)
+    submission_date: datetime = db.Column('submission_date', db.DateTime, nullable=False)
 
-    
+  

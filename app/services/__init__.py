@@ -6,4 +6,5 @@ from .receipt_service import ReceiptService
 from .stock_service import StockService
 from .batch_service import BatchService
 from .article_service import ArticleService
+from .message import MessageBuilder, Message
 

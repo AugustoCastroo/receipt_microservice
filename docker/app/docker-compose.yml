@@ -2,7 +2,7 @@ services:
     receipt:
         image: receipt-microservice:v1.0.0
         deploy:
-            replicas: 1
+            replicas: 4
         networks:
             mired:
                 aliases:
@@ -18,12 +18,19 @@ services:
           - REDIS_PORT=${REDIS_PORT}
           - REDIS_DB=${REDIS_DB}
           - REDIS_PASSWORD=${REDIS_PASSWORD}
+          - URL_ARTICLE_SERVICE=${URL_ARTICLE_SERVICE}
+          - URL_STOCK_SERVICE=${URL_STOCK_SERVICE}
         labels:
             - "traefik.enable=true"
-            - "traefik.http.routers.receipt.rule=Host(`receitp.universidad.localhost`)"
+            - "traefik.http.routers.receipt.rule=Host(`receipt.universidad.localhost`)"
             - "traefik.http.routers.receipt.tls=true"
             - "traefik.http.services.receipt.loadbalancer.server.port=5000"
-            - "traefik.docker.network=mired"    
+            - "traefik.docker.network=mired"  
+            # Patron Circuit Breaker https://doc.traefik.io/traefik/middlewares/http/circuitbreaker/
+            - "traefik.http.middlewares.receipt.circuitbracker.expression=NetworkErrorRatio() > 0.5"
+            - "traefik.http.middlewares.receipt.circuitbracker.expression=ResponseCodeRatio(500,600,0,600) > 0.25"
+            - "traefik.http.middlewares.receipt.circuitbracker.expression=LatencyAtQuantileMS(50) > 100"
+            
 
 networks:
     mired:
