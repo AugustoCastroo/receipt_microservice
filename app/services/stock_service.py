@@ -1,20 +1,18 @@
-from app.models import Stock, ReceiptItem, Article
-from app.repositories import ReceiptRepository
-from app.services import ArticleService, BrandService
+import os
+import requests # app/services/stock.py
+from app.dto import Stock
+from app.mapping import StockMap
 
 class StockService():
 
     @staticmethod
-    def register(stock: Stock) -> Stock:
-        article = ArticleService.find(stock.article.id)
-        if not article:
-            raise ValueError(f"Article with ID {stock.article.id} does not exist.")
-
-        receipt = ReceiptRepository.find(stock.receipt.id)
-        if not receipt:
-            raise ValueError(f"Receipt with ID {stock.receipt.id} does not exist.")
-
-        brand = BrandService.find(article.brand_id)
-        if not brand:
-            raise ValueError(f"Brand with ID {article.brand_id} does not exist.")
-        return ArticleService.save(stock)
+    def find(id: int) -> 'Stock':
+        URL_ARTICLE_SERVICE = os.getenv('URL_ARTICLE_SERVICE')
+        if not URL_ARTICLE_SERVICE:
+            raise ValueError("Environment variable 'URL_ARTICLE_SERVICE' is not set.")
+        stock_mapping = StockMap()
+        sotck_r = stock_mapping.load(requests.get(f"{URL_ARTICLE_SERVICE}/stock{id}", verify=False))
+        if stock_r.status_code == 200:
+            return stock_mapping.load(stock_r.json())
+        else:
+            raise Exception(f"Error fetching stock with id {id}: {stock_r.status_code} - {stock_r.text}")
