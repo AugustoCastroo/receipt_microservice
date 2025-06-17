@@ -25,7 +25,7 @@ class ReceiptService:
             receipt_type = ReceiptTypeRepository.exists(receipt_dto.id_receipt_type)          
             receipt = Receipt(
                 id_header=receipt_dto.header.id,
-                id_footer=receipt_dto.footer.id,
+                id_footer=receipt_dto.Footer.id,
                 id_receipt_type=receipt_dto.id_receipt_type
             )
 

@@ -1,9 +1,10 @@
 import logging
-from flask import Blueprint, request # type: ignore
+from flask import Blueprint, request # typo: ignore
 from app.services import ReceiptService
 from app.mapping import ReceiptMap
 from app.mapping import MessageMap
 from app.services import MessageBuilder
+from app.dto import ReceiptDTO
 
 receipt_bp = Blueprint('receipt', __name__)
 
@@ -29,18 +30,28 @@ def get_all():
 
 @receipt_bp.route('/receipts', methods=['POST'])
 def post():
-    receipt_schema = ReceiptMap()
-    receipt = receipt_schema.load(request.json)
-    ReceiptService.save(receipt)
-    message_map = MessageMap()
-    message_builder = MessageBuilder()
-    message_finish = message_builder.add_message('Recibo creado').build()
-    return message_map.dump(message_finish), 200
+    try:
+        receipt_dto_data = request.json
+        receipt_dto = ReceiptDTO(**receipt_dto_data)
+        
+        result_dto = ReceiptService.register_receipt(receipt_dto)
+        
+        message_builder = MessageBuilder()
+        message_finish = message_builder.add_message('Recibo creado exitosamente').add_data({'receipt': result_dto}).build()
+        message_map = MessageMap()
+        return message_map.dump(message_finish), 201
+        
+    except Exception as e:
+        message_builder = MessageBuilder()
+        message_finish = message_builder.add_message(f'Error al crear recibo: {str(e)}').build()
+        message_map = MessageMap()
+        return message_map.dump(message_finish), 400
 
 @receipt_bp.route('/receipts/<int:id>', methods=['PUT'])
 def put(id: int):
     receipt_schema = ReceiptMap()
     new_receipt = receipt_schema.load(request.json)
+    new_receipt.id = id
     ReceiptService.update(new_receipt)
     message_map = MessageMap()
     message_builder = MessageBuilder()
