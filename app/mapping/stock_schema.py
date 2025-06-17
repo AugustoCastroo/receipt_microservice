@@ -1,5 +1,5 @@
 from marshmallow import Schema, fields, post_load
-from app.dto import Stock
+from app.dto import StockDTO
 
 class StockMap(Schema):
     id = fields.Integer(dump_only=True)
@@ -10,4 +10,4 @@ class StockMap(Schema):
 
     @post_load
     def bind_stock(self, data, **kwargs):
-        return Stock(**data)
+        return StockDTO(**data)

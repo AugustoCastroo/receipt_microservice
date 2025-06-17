@@ -1,6 +1,6 @@
 from typing import List
 from app.models.receipt import Receipt
-from app.repositories import CreateAbstractRepository, ReadAbstractRepository
+from app.repositories.base_repository import CreateAbstractRepository, ReadAbstractRepository
 from app import db
 
 class ReceiptRepository(CreateAbstractRepository, ReadAbstractRepository):

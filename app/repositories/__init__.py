@@ -4,3 +4,4 @@ from .receipt_header_repository import ReceiptHeaderRepository
 from .receipt_footer_repository import ReceiptFooterRepository
 from .receipt_items_repository import ReceiptItemsRepository
 from .base_repository import CreateAbstractRepository, ReadAbstractRepository, UpdateAbstractRepository, DeleteAbstractRepository
+from .batch_repository import BatchRepository

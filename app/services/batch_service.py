@@ -1,27 +1,31 @@
-from app.models import Batch
+from app.dto import BatchDTO
 from app.repositories import BatchRepository
 from typing import List
 
-
 class BatchService():
     
-    def save(batch: Batch) -> 'Batch':
-
+    @staticmethod
+    def save(batch: BatchDTO) -> 'BatchDTO':
         BatchRepository.save(batch)
         return batch
-    
-    def delete(batch: 'Batch') -> None:
+
+    @staticmethod
+    def delete(batch: 'BatchDTO') -> None:
         BatchRepository.delete(batch)
 
-    def find(id: int) -> 'Batch':
+    @staticmethod
+    def find(id: int) -> 'BatchDTO':
         return BatchRepository.find(id)
-    
-    def find_all() -> List['Batch']:
+
+    @staticmethod
+    def find_all() -> List['BatchDTO']:
         return BatchRepository.find_all()
-    
-    def find_by(**kwargs) -> List['Batch']:
+
+    @staticmethod
+    def find_by(**kwargs) -> List['BatchDTO']:
         return BatchRepository.find_by(**kwargs)
-    
-    def update(batch: 'Batch') -> 'Batch':
+
+    @staticmethod
+    def update(batch: 'BatchDTO') -> 'BatchDTO':
         BatchRepository.update(batch)
         return batch

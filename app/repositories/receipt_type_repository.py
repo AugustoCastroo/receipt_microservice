@@ -1,7 +1,7 @@
 from typing import List
 from app.models.receipt import Receipt
 from app.models.receipt_types import ReceiptType
-from app.repositories import CreateAbstractRepository, ReadAbstractRepository, DeleteAbstractRepository
+from app.repositories.base_repository import CreateAbstractRepository, ReadAbstractRepository, DeleteAbstractRepository
 
 from app import db
 
@@ -11,7 +11,7 @@ class ReceiptTypeRepository(CreateAbstractRepository,ReadAbstractRepository,Dele
     def save(receipt_type:ReceiptType) -> 'ReceiptType':
         db.session.add(receipt_type)
         db.session.commit()
-        return ReceiptType
+        return receipt_type
     
     @staticmethod
     def delete(receipt_type:ReceiptType) -> None:

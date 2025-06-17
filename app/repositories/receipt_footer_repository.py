@@ -1,6 +1,6 @@
 from app.models.receipt import Receipt
 from app.models import ReceiptFooter
-from app.repositories import CreateAbstractRepository
+from app.repositories.base_repository import CreateAbstractRepository
 from app import db
 
 

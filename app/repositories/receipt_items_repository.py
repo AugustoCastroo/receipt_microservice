@@ -1,5 +1,5 @@
 from app.models import ReceiptItem
-from app.repositories import CreateAbstractRepository
+from app.repositories.base_repository import CreateAbstractRepository
 from app import db
 
 

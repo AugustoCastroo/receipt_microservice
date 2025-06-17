@@ -1,4 +1,4 @@
-from app.models import Article
+from app.dto import ArticleDTO
 from typing import List
 import requests # app/services/article.py
 from app.mapping.article_schema import ArticleMap
@@ -12,7 +12,7 @@ class ArticleService():
 
     @staticmethod
     @retry(wait=wait_random(min=1, max=3), stop=stop_after_attempt(3))
-    def find(id: int) -> 'Article':
+    def find(id: int) -> 'ArticleDTO':
         URL_ARTICLE_SERVICE = os.getenv('URL_ARTICLE_SERVICE')
         if not URL_ARTICLE_SERVICE:
             raise ValueError("Environment variable 'URL_ARTICLE_SERVICE' is not set.")

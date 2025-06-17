@@ -1,14 +1,14 @@
 import os
 import requests # app/services/stock.py
-from app.dto import Stock
-from app.mapping import StockMap, MessageMap, Message
+from app.dto import StockDTO
+from app.mapping import StockMap, MessageMap
 from tenacity import retry, wait_random, stop_after_attempt
 
 class StockService():
 
     @staticmethod
     @retry(wait=wait_random(min=1, max=3), stop=stop_after_attempt(3))
-    def register(stock: Stock) -> Stock:
+    def register(stock: StockDTO) -> StockDTO:
         URL_STOCK_SERVICE = os.getenv('URL_STOCK_SERVICE')
         if not URL_STOCK_SERVICE:
             raise ValueError("Environment variable 'URL_STOCK_SERVICE' is not set.")
