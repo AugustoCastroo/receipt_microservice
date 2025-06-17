@@ -2,7 +2,7 @@ services:
     receipt:
         image: receipt-microservice:v1.0.0
         deploy:
-            replicas: 4
+            replicas: 2
         networks:
             mired:
                 aliases:
@@ -10,9 +10,9 @@ services:
         environment:
           - SQLALCHEMY_TRACK_MODIFICATIONS=${SQLALCHEMY_TRACK_MODIFICATIONS}
           - SQLALCHEMY_RECORD_QUERIES=${SQLALCHEMY_RECORD_QUERIES}
-          - TEST_DATABASE_URI=${TEST_DATABASE1_URI}
-          - DEV_DATABASE_URI=${DEV_DATABASE1_URI}
-          - PROD_DATABASE_URI=${PROD_DATABASE1_URI}
+          - TEST_DATABASE_URI=${TEST_DATABASE_URI}
+          - DEV_DATABASE_URI=${DEV_DATABASE_URI}
+          - PROD_DATABASE_URI=${PROD_DATABASE_URI}
           - FLASK_CONTEXT=${FLASK_CONTEXT}
           - REDIS_HOST=${REDIS_HOST}
           - REDIS_PORT=${REDIS_PORT}

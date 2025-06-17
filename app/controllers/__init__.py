@@ -1,0 +1,1 @@
+from app.controllers import receipt_bp

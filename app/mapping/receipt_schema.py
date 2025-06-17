@@ -1,4 +1,4 @@
-from marshmallow import Schema, fields, post_load
+from marshmallow import Schema, fields, post_load # type: ignore
 from app.models.receipt import Receipt
 
 class ReceiptMap(Schema):
