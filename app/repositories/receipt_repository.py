@@ -1,9 +1,9 @@
 from typing import List
 from app.models.receipt import Receipt
-from app.repositories import CreateAbstractRepository
+from app.repositories import CreateAbstractRepository, ReadAbstractRepository
 from app import db
 
-class ReceiptRepository(CreateAbstractRepository):
+class ReceiptRepository(CreateAbstractRepository, ReadAbstractRepository):
 
     @staticmethod
     def save(receipt: Receipt) -> 'Receipt' :
@@ -14,6 +14,10 @@ class ReceiptRepository(CreateAbstractRepository):
     @staticmethod
     def find(id: int) -> 'Receipt':
         return Receipt.query.get(id)
+
+    @staticmethod
+    def find_all() -> List['Receipt']:
+        return Receipt.query.all()
     
     @staticmethod
     def find_by(**kwargs) -> List[Receipt]:

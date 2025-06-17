@@ -13,3 +13,4 @@ requests==2.32.3
 tenacity==9.1.2
 Flask-Caching==2.3.1
 redis==6.1.0
+uwsgi==2.0.26

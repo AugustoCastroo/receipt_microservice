@@ -1,1 +1,1 @@
-from app.controllers import receipt_bp
+from receipt_controller import receipt_bp
